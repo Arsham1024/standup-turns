@@ -1,19 +1,24 @@
 # Standup Turns
 
-A tiny SvelteKit app for running daily standups. It keeps a list of
-participants, lets you **shuffle** the speaking order, and gives each person a
-2‑minute countdown timer so nobody hogs the meeting.
+A tiny SvelteKit app for running daily standups. Keep a list of participants,
+**shuffle** the speaking order, and give each person a countdown timer so nobody
+hogs the meeting. Everything is saved in your browser, so your list and settings
+survive a refresh.
 
 Built with SvelteKit, Tailwind CSS, and [shadcn-svelte](https://www.shadcn-svelte.com/)
-UI components.
+UI components, with [lucide](https://lucide.dev/) icons.
 
 ## Features
 
 - Add and remove participants
 - Shuffle the order randomly
-- Click a name to check them off and start their 2‑minute (120s) timer
-- Live "time remaining" countdown with a progress bar
-- Click again to reset a person's timer
+- Click a name to start their countdown; click again to pause. Only one person
+  runs at a time (the current speaker)
+- Adjustable per-person time budget (default 2 minutes)
+- Live progress bar and remaining time, with a red warning in the final seconds
+- Mark someone done, reset one person, or reset everyone
+- Light / dark theme toggle
+- State persists to `localStorage`
 
 ## Running it
 
@@ -33,21 +38,25 @@ npm run build
 npm run preview
 ```
 
-## Usage
+## Controls
 
-- **+** button — open the modal to add a new name (press Enter or "Add Name")
 - **Shuffle** — randomize the order and reset all timers
-- Click a **name** — toggle it done and start/stop that person's timer
-- **delete** — remove a participant
+- **Reset all** — clear everyone's timers and done state
+- **Minutes each** — set the per-person time budget
+- Click a **name** — start / pause that speaker's countdown
+- **✓** — mark a person done · **↺** — reset their timer · **🗑** — remove them
+- **Add** — add a new name (or press Enter in the field)
+- **☀ / ☾** — toggle light / dark theme
 
 ## Project layout
 
-- `src/routes/+page.svelte` — the whole app: participant list, shuffle, timers
+- `src/routes/+page.svelte` — the whole app: participant list, shuffle, timers, persistence
 - `src/routes/+layout.js` — loads global styles
-- `src/lib/components/ui/` — shadcn-svelte components (button, card, carousel, table, progress)
-- `src/app.css` — Tailwind entry + global styles
+- `src/lib/components/ui/` — shadcn-svelte components (button, card, progress)
+- `src/lib/utils.ts` — `cn` class-merge helper
+- `src/app.css` — Tailwind entry + theme tokens
 - `tailwind.config.ts`, `postcss.config.js`, `svelte.config.js`, `vite.config.ts` — tooling config
 
 ## Tech
 
-SvelteKit 2 · Svelte 4 · Tailwind CSS 3 · shadcn-svelte / bits-ui · Vite 5 · TypeScript
+SvelteKit 2 · Svelte 4 · Tailwind CSS 3 · shadcn-svelte / bits-ui · lucide · Vite 5 · TypeScript
