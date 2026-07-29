@@ -1,5 +1,7 @@
 # Standup Turns
 
+**Live demo: https://arsham1024.github.io/standup-turns/**
+
 A tiny SvelteKit app for running daily standups. Keep a list of participants,
 **shuffle** the speaking order, and give each person a countdown timer so nobody
 hogs the meeting. Everything is saved in your browser, so your list and settings
@@ -48,14 +50,31 @@ npm run preview
 - **Add** — add a new name (or press Enter in the field)
 - **☀ / ☾** — toggle light / dark theme
 
+## Deploying to GitHub Pages
+
+The app is hosted on GitHub Pages at
+**https://arsham1024.github.io/standup-turns/**.
+
+It builds as a fully static, client-side site:
+
+- `@sveltejs/adapter-static` prerenders the app into a `build/` folder
+- `svelte.config.js` sets `paths.base` to `/standup-turns` for production (the
+  repo name), so assets resolve under the project-page URL
+- `.github/workflows/deploy.yml` builds and publishes to Pages on every push to
+  `main` (and can be run manually from the Actions tab)
+
+One-time setup in the repo: **Settings → Pages → Build and deployment →
+Source: GitHub Actions**. After that, merging to `main` deploys automatically.
+
 ## Project layout
 
 - `src/routes/+page.svelte` — the whole app: participant list, shuffle, timers, persistence
-- `src/routes/+layout.js` — loads global styles
+- `src/routes/+layout.js` — loads global styles and enables prerendering
 - `src/lib/components/ui/` — shadcn-svelte components (button, card, progress)
 - `src/lib/utils.ts` — `cn` class-merge helper
 - `src/app.css` — Tailwind entry + theme tokens
 - `tailwind.config.ts`, `postcss.config.js`, `svelte.config.js`, `vite.config.ts` — tooling config
+- `.github/workflows/deploy.yml` — builds and publishes to GitHub Pages
 
 ## Tech
 
