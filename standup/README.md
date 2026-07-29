@@ -1,38 +1,62 @@
-# create-svelte
+# Standup Turns
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+A tiny SvelteKit app for running daily standups. Keep a list of participants,
+**shuffle** the speaking order, and give each person a countdown timer so nobody
+hogs the meeting. Everything is saved in your browser, so your list and settings
+survive a refresh.
 
-## Creating a project
+Built with SvelteKit, Tailwind CSS, and [shadcn-svelte](https://www.shadcn-svelte.com/)
+UI components, with [lucide](https://lucide.dev/) icons.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
+
+- Add and remove participants
+- Shuffle the order randomly
+- Click a name to start their countdown; click again to pause. Only one person
+  runs at a time (the current speaker)
+- Adjustable per-person time budget (default 2 minutes)
+- Live progress bar and remaining time, with a red warning in the final seconds
+- Mark someone done, reset one person, or reset everyone
+- Light / dark theme toggle
+- State persists to `localStorage`
+
+## Running it
+
+Requires Node.js and npm.
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
+npm install
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+Then open the URL that Vite prints (by default http://localhost:5173/).
 
-To create a production version of your app:
+To build a production version:
 
 ```bash
 npm run build
+npm run preview
 ```
 
-You can preview the production build with `npm run preview`.
+## Controls
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- **Shuffle** — randomize the order and reset all timers
+- **Reset all** — clear everyone's timers and done state
+- **Minutes each** — set the per-person time budget
+- Click a **name** — start / pause that speaker's countdown
+- **✓** — mark a person done · **↺** — reset their timer · **🗑** — remove them
+- **Add** — add a new name (or press Enter in the field)
+- **☀ / ☾** — toggle light / dark theme
+
+## Project layout
+
+- `src/routes/+page.svelte` — the whole app: participant list, shuffle, timers, persistence
+- `src/routes/+layout.js` — loads global styles
+- `src/lib/components/ui/` — shadcn-svelte components (button, card, progress)
+- `src/lib/utils.ts` — `cn` class-merge helper
+- `src/app.css` — Tailwind entry + theme tokens
+- `tailwind.config.ts`, `postcss.config.js`, `svelte.config.js`, `vite.config.ts` — tooling config
+
+## Tech
+
+SvelteKit 2 · Svelte 4 · Tailwind CSS 3 · shadcn-svelte / bits-ui · lucide · Vite 5 · TypeScript
